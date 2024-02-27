@@ -52,7 +52,7 @@ $route = [
         'file'=> 'TitlesController#edit',
     ],
     [
-        'method' => 'post',
+        'method' => 'POST',
         'url'=> '/titles/update',
         'file'=> 'TitlesController#update',
     ],
