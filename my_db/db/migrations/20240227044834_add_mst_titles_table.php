@@ -20,7 +20,7 @@ final class AddMstTitlesTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table("mst_titles");
-        $table->addColumn('name', 'string', ['null' => true, 'limit' => 100])
+        $table->addColumn('name', 'string', ['null' => false, 'limit' => 100])
             ->addColumn('author', 'string', ['default' => null, 'null' => false, 'limit' => 100])
             ->addColumn('description', 'string', ['default'=> null, 'null' => false])
             ->addIndex(['name'], ['unique' => true])

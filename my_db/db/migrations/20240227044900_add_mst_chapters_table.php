@@ -20,10 +20,10 @@ final class AddMstChaptersTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table("mst_chapters");
-        $table->addColumn('titles_id', 'integer', ['signed' => false,'null' => true])
-        ->addColumn('name', 'string', ['null' => true])
+        $table->addColumn('title_id', 'integer', ['signed' => false,'null' => false])
+        ->addColumn('name', 'string', ['null' => false])
         ->addColumn('publication_start_date', 'date', ['null' => false])
-        ->addForeignKey('titles_id', 'mst_titles', 'id')
+        ->addForeignKey('title_id', 'mst_titles', 'id')
         ->create();
     }
 }

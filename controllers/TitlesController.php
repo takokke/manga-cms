@@ -22,12 +22,18 @@ class TitlesController {
     }
     public function new() {
         $this->authenticate_admin_user();
+    // トークン作成
+    $csrf_token = bin2hex(random_bytes(32));
+
+    // 生成したトークンをセッションに保存
+    $_SESSION['csrf_token'] = $csrf_token;
+
         require("../views/titles/new.php");
     }
 
     public function create() {
         $this->authenticate_admin_user();
-        $this->csrf_token();
+        $this->csrf_token_check();
 
         // 接続
         $mysqli = new mysqli('localhost', 'takumi', 'brightech', 'test');
@@ -50,6 +56,7 @@ class TitlesController {
             $stmt->execute();
             $stmt->close();
         }
+        $mysqli->close();
 
         header('Location: http://192.168.64.10/titles');
     }
@@ -76,12 +83,18 @@ class TitlesController {
         $stmt->fetch();
         $stmt->close();
         $mysqli->close();
+
+        // トークン作成
+        $csrf_token = bin2hex(random_bytes(32));
+
+        // 生成したトークンをセッションに保存
+        $_SESSION['csrf_token'] = $csrf_token;
         require("../views/titles/edit.php");
     }
 
     public function update() {
         $this->authenticate_admin_user();
-        $this->csrf_token();
+        $this->csrf_token_check();
         $request_param = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
         $parts = explode('=', $request_param);
         $search_id = $parts[1];
@@ -116,7 +129,7 @@ class TitlesController {
         }
     }
 
-    private function csrf_token()  {
+    private function csrf_token_check()  {
         // トークンを確認
         if (!isset($_POST["csrf_token"]) && $_POST["csrf_token"] != $_SESSION['csrf_token']) {
             echo "入力画面が不正です";

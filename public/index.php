@@ -4,58 +4,78 @@ $route = [
     [
         'method' => 'GET',
         'url'=> '/sign_up',
-        'file'=> 'RegistrationsController#new',
+        'controller_action'=> 'RegistrationsController#new',
     ],
     [
         'method' => 'POST',
         'url'=> '/sign_up',
-        'file'=> 'RegistrationsController#create',
+        'controller_action'=> 'RegistrationsController#create',
     ],
     [
         'method' => 'GET',
         'url'=> '/sign_in',
-        'file'=> 'SessionsController#new',
+        'controller_action'=> 'SessionsController#new',
     ],
     [
         'method' => 'POST',
         'url'=> '/sign_in',
-        'file'=> 'SessionsController#create',
+        'controller_action'=> 'SessionsController#create',
     ],
     [
         'method' => 'GET',
         'url'=> '/user',
-        'file'=> 'SessionsController#show',
+        'controller_action'=> 'SessionsController#show',
     ],
     [
         'method' => 'POST',
         'url'=> '/sign_out',
-        'file'=> 'SessionsController#destroy',
+        'controller_action'=> 'SessionsController#destroy',
     ],
     [
         'method' => 'GET',
         'url'=> '/titles',
-        'file'=> 'TitlesController#index',
+        'controller_action'=> 'TitlesController#index',
     ],
     [
         'method' => 'GET',
         'url'=> '/titles/new',
-        'file'=> 'TitlesController#new',
+        'controller_action'=> 'TitlesController#new',
     ],
     [
         'method' => 'POST',
         'url'=> '/titles/create',
-        'file'=> 'TitlesController#create',
+        'controller_action'=> 'TitlesController#create',
     ],
     [
         'method' => 'GET',
         'url'=> '/titles/edit',
-        'file'=> 'TitlesController#edit',
+        'controller_action'=> 'TitlesController#edit',
     ],
     [
         'method' => 'POST',
         'url'=> '/titles/update',
-        'file'=> 'TitlesController#update',
+        'controller_action'=> 'TitlesController#update',
     ],
+    [
+        'method'=> 'GET',
+        'url'=> '/titles/chapters',
+        'controller_action'=> 'ChaptersController#index',
+    ],
+    [
+        'method'=> 'GET',
+        'url'=> '/titles/chapters/new',
+        'controller_action'=> 'ChaptersController#new',
+    ],
+    [
+        'method'=> 'POST',
+        'url'=> '/titles/chapters/create',
+        'controller_action'=> 'ChaptersController#create',
+    ], 
+    [
+        'method'=> 'GET',
+        'url'=> '/titles/chapters/edit',
+        'controller_action'=> 'ChaptersController#edit',
+    ], 
 
 ];
 
@@ -69,8 +89,6 @@ foreach ($route as $route_item) {
         $matched_route = $route_item;
         break;
     }
-
-    //$request_uriが/titles/:id/editの時TitlesControllerのedit()を呼び出す
 }
 
 // ヘッダー
@@ -79,7 +97,7 @@ require('../views/layouts/header.php');
 // マッチしたルートがあるかどうかを確認し、対応するファイルを含めるか404エラーを返す
 if ($matched_route !== null) {
 
-    $controllerAction = $matched_route['file'];
+    $controllerAction = $matched_route['controller_action'];
     list($controller, $action) = explode('#', $controllerAction);
     // ファイルを呼び出す
     include_once("../controllers/".$controller.".php");
