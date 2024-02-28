@@ -1,7 +1,6 @@
 <h2>マンガ編集画面</h2>
-<form action='/titles/update' method='post'>
+<form action='/titles/update?id=<?= $id ?>' method='post'>
     <input type='hidden' name='csrf_token' value='<?=$_SESSION['csrf_token']?>'>
-    <input type='hidden' name='id' value='<?= $id?>'>
     <div>
         <input type='text' name='title' value=<?= $name ?> placeholder='タイトル名'/>
     </div>

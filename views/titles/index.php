@@ -1,6 +1,6 @@
 <h2>マンガ一覧画面</h2>
 <div>
-    <a href="http://192.168.64.10/titles/new">マンガ新規追加はこちら</a>
+    <a href="http://192.168.64.10/titles/new"><button>マンガ新規追加</button></a>
 </div>
 <form action="/sign_out" method="post">
     <button type="submit" name="sign_out" value="send">ログアウト</button>

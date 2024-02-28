@@ -75,8 +75,12 @@ $route = [
         'method'=> 'GET',
         'url'=> '/titles/chapters/edit',
         'controller_action'=> 'ChaptersController#edit',
-    ], 
-
+    ],
+    [
+        'method'=> 'POST',
+        'url'=> '/titles/chapters/update',
+        'controller_action'=> 'ChaptersController#update',
+    ]
 ];
 
 $request_method = $_SERVER['REQUEST_METHOD'];

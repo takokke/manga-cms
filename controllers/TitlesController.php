@@ -95,9 +95,7 @@ class TitlesController {
     public function update() {
         $this->authenticate_admin_user();
         $this->csrf_token_check();
-        $request_param = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-        $parts = explode('=', $request_param);
-        $search_id = $parts[1];
+        $id = $_GET['id'];
 
         // 入力情報受け取り
         $input_title = htmlspecialchars($_POST["title"], ENT_QUOTES, "UTF-8");
@@ -113,7 +111,7 @@ class TitlesController {
             $mysqli->set_charset('utf8');
         }
         $stmt = $mysqli->prepare("UPDATE mst_titles SET `name` = ?, `author` = ?, `description` = ? WHERE `id`=?");
-        $stmt->bind_param("sssi", $input_title, $input_author, $input_description, $_POST["id"]);
+        $stmt->bind_param("sssi", $input_title, $input_author, $input_description, $id);
         $stmt->execute();
         $stmt->close();
         $mysqli->close();
