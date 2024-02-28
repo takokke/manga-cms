@@ -10,7 +10,6 @@
     <div>
         <input type="date" id="start" name="publication_start_date" value=<?= $start_date?> >
     </div>
-    
     <div>
         <input type="submit" value="編集">
     </div>

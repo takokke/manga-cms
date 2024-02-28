@@ -52,12 +52,20 @@ class ChaptersController {
             $mysqli->set_charset('utf8');
         }
 
-        $stmt = $mysqli->prepare('INSERT INTO mst_chapters (`title_id`, `name`, `publication_start_date`) VALUES(?, ?, ?);');
-        $stmt->bind_param("iss", $title_id, $chapter_name, $start_date);
-        $stmt->execute();
-        $stmt->close();
-        $mysqli->close();
-        header("Location: http://192.168.64.10/titles/chapters?title_id=$title_id");
+        if (empty($_POST['chapter_name'])) {
+            echo "チャプター名は必須項目です";
+            require("../views/chapters/new.php");
+        } elseif(new DateTime(date("Y-m-d")) > new DateTime($start_date)){
+            echo "公開開始部が過去に設定されています";
+            require("../views/chapters/new.php");
+        } else {
+            $stmt = $mysqli->prepare('INSERT INTO mst_chapters (`title_id`, `name`, `publication_start_date`) VALUES(?, ?, ?);');
+            $stmt->bind_param("iss", $title_id, $chapter_name, $start_date);
+            $stmt->execute();
+            $stmt->close();
+            $mysqli->close();
+            header("Location: http://192.168.64.10/titles/chapters?title_id=$title_id");
+        }
     }
 
     public function edit() {
@@ -102,14 +110,30 @@ class ChaptersController {
             $mysqli->set_charset('utf8');
         }
 
-        $stmt = $mysqli->prepare('UPDATE mst_chapters SET `name` = ?, `publication_start_date` = ? WHERE `id` = ?;');
-        $stmt->bind_param('ssi', $input_chapter_name, $input_start_date, $id);
-        $stmt->execute();
-        $stmt->close();
-        $mysqli->close();
-
-        header("Location: http://192.168.64.10/titles/chapters?title_id=$title_id");
-
+        if (empty($_POST['chapter_name'])) {
+            echo "チャプター名は必須項目です";
+            $stmt = $mysqli->prepare('SELECT `name`, `publication_start_date` FROM mst_chapters WHERE `id` = ?;');
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $stmt->bind_result($chapter_name, $start_date);
+            $stmt->fetch();
+            require("../views/chapters/edit.php");
+        } elseif (new DateTime(date("Y-m-d")) > new DateTime($input_start_date)) {
+            echo "公開開始部が過去に設定されています";
+            $stmt = $mysqli->prepare('SELECT `name`, `publication_start_date` FROM mst_chapters WHERE `id` = ?;');
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $stmt->bind_result($chapter_name, $start_date);
+            $stmt->fetch();
+            require("../views/chapters/edit.php");
+        } else {
+            $stmt = $mysqli->prepare('UPDATE mst_chapters SET `name` = ?, `publication_start_date` = ? WHERE `id` = ?;');
+            $stmt->bind_param('ssi', $input_chapter_name, $input_start_date, $id);
+            $stmt->execute();
+            $stmt->close();
+            $mysqli->close();
+            header("Location: http://192.168.64.10/titles/chapters?title_id=$title_id");
+        }
     }
 
     // プライベートメソッド
@@ -127,6 +151,5 @@ class ChaptersController {
             exit();
         }
     }
-
 
 }
