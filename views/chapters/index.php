@@ -18,8 +18,29 @@
         <tr>
             <td><?= $chapter_name ?></td>
             <td><?= $start_date ?></td>
+            <td>
+                <?php
+                $thumbnail_path = "/assets/chapters/{$id}.webp";
+                ?>
+
+                <?php 
+                    if (!is_null(glob("../public$thumbnail_path")[0])) {
+                        ?>
+                        <img src=<?= $thumbnail_path ?> alt="">
+                        <?php
+                    } else {
+                        echo "ファイル未設定";
+                    }
+                ?>
+            </td>
             <td><buttun><a href='http://192.168.64.10/titles/chapters/edit?title_id=<?= $title_id ?>&id=<?= $id ?>' >編集</a></buttun></td>
         </tr>
         <?php } ?>
     </tbody>
 </table>
+
+<style>
+    img{
+        width:120px;
+    }
+</style>

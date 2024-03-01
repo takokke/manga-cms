@@ -18,7 +18,7 @@ class ChaptersController {
         $stmt->bind_param("i", $title_id);
         $stmt->execute();
         $stmt->bind_result($id, $chapter_name, $start_date);
-        
+
         require("../views/chapters/index.php");
 
         // 切断
@@ -96,6 +96,28 @@ class ChaptersController {
         $this->csrf_token_check();
         $id = htmlspecialchars($_GET["id"], ENT_QUOTES, "UTF-8");
         $title_id = htmlspecialchars($_GET["title_id"], ENT_QUOTES, "UTF-8");
+        $tempfile = $_FILES['thumbnail']["tmp_name"];
+        $extension = preg_replace('/^.*\.([^.]+)$/', '$1', $_FILES["thumbnail"]["name"]);
+        $newfilename = "{$id}.{$extension}";
+        
+        $uploadfilename = "../public/assets/chapters/".$newfilename;
+
+        if (is_uploaded_file($tempfile)) {
+            if ( move_uploaded_file($tempfile , $uploadfilename )) {
+                echo $uploadfilename . "をアップロードしました。";
+            } else {
+                echo "ファイルをアップロードできません。";
+                exit();
+            }
+        } else {
+            echo "ファイルが選択されていません。";
+            exit();
+        } 
+
+        // todo webpに変換
+        $cmd_cwebp = "cwebp -q 50 $uploadfilename -o ../public/assets/chapters/$id.webp";
+        exec($cmd_cwebp);
+
 
         // 入力情報受け取り
         $input_chapter_name = htmlspecialchars($_POST["chapter_name"], ENT_QUOTES, "UTF-8");
