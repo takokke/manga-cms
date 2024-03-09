@@ -5,7 +5,7 @@ class TitlesController {
         $this->authenticate_admin_user();
 
         // 接続
-        $mysqli = new mysqli('localhost', 'takumi', 'brightech', 'test');
+        $mysqli = new mysqli('localhost', 'hiroshima', 'brightech', 'test');
         if($mysqli->connect_error){
             echo $mysqli->connect_error;
             exit();
@@ -36,7 +36,7 @@ class TitlesController {
         $this->csrf_token_check();
 
         // 接続
-        $mysqli = new mysqli('localhost', 'takumi', 'brightech', 'test');
+        $mysqli = new mysqli('localhost', 'hiroshima', 'brightech', 'test');
         if($mysqli->connect_error){
           echo $mysqli->connect_error;
           exit();
@@ -59,7 +59,7 @@ class TitlesController {
             $stmt->execute();
             $stmt->close();
             $mysqli->close();
-            header('Location: http://192.168.64.10/titles');
+            header('Location: http://192.168.64.9/titles');
         }
 
     }
@@ -71,7 +71,7 @@ class TitlesController {
         $search_id = $parts[1];
 
         // 接続
-        $mysqli = new mysqli('localhost', 'takumi', 'brightech', 'test');
+        $mysqli = new mysqli('localhost', 'hiroshima', 'brightech', 'test');
         if($mysqli->connect_error){
             echo $mysqli->connect_error;
             exit();
@@ -106,7 +106,7 @@ class TitlesController {
         $input_description = htmlspecialchars($_POST["description"], ENT_QUOTES, "UTF-8");
 
         // 接続
-        $mysqli = new mysqli('localhost', 'takumi', 'brightech', 'test');
+        $mysqli = new mysqli('localhost', 'hiroshima', 'brightech', 'test');
         if($mysqli->connect_error){
             echo $mysqli->connect_error;
             exit();
@@ -130,7 +130,7 @@ class TitlesController {
             $stmt->execute();
             $stmt->close();
             $mysqli->close();
-            header('Location: http://192.168.64.10/titles');
+            header('Location: http://192.168.64.9/titles');
         }
 
     }
@@ -140,7 +140,7 @@ class TitlesController {
     private function authenticate_admin_user() {
         session_start();
         if(!isset($_SESSION['user_id'])) {
-            header('Location: http://192.168.64.10/sign_in');
+            header('Location: http://192.168.64.9/sign_in');
         }
     }
 

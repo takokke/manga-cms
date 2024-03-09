@@ -22,7 +22,7 @@ return
             'adapter' => 'mysql',
             'host' => 'localhost',
             'name' => 'test',
-            'user' => 'takumi',
+            'user' => 'hiroshima',
             'pass' => 'brightech',
             'port' => '3306',
             'charset' => 'utf8',

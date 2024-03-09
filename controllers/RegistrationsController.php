@@ -9,7 +9,7 @@ class RegistrationsController {
 	// ユーザー作成を行うアクション
 	public function create() {
 		if (isset($_POST["email"]) && !empty($_POST["email"]) && !empty($_POST["password"])) {
-			$mysqli= new mysqli('localhost', 'takumi', 'brightech', 'test');
+			$mysqli= new mysqli('localhost', 'hiroshima', 'brightech', 'test');
 		
 			if ($mysqli->connect_error) {
 				echo $mysqli->connect_error;
@@ -34,7 +34,7 @@ class RegistrationsController {
 			// 切断
 			$stmt->close();
 			$mysqli->close();
-			header('Location: http://192.168.64.10/sign_up');
+			header('Location: http://192.168.64.9/sign_up');
 		
 		}
 

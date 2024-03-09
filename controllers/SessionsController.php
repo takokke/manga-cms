@@ -4,7 +4,7 @@ class SessionsController {
         session_start();
         // SESSION[user_id]に値入っていればログインしたとみなす
         if(isset($_SESSION['user_id'])) {
-          header('Location: http://192.168.64.10/titles');
+          header('Location: http://192.168.64.9/titles');
           exit();
         } else {
             require('../views/sessions/new.php');
@@ -14,7 +14,7 @@ class SessionsController {
     public function create() {
         session_start();
         //MySQLに接続
-        $mysqli = new mysqli('localhost', 'takumi', 'brightech', 'test');
+        $mysqli = new mysqli('localhost', 'hiroshima', 'brightech', 'test');
         if($mysqli->connect_error){
           echo $mysqli->connect_error;
           exit();
@@ -23,7 +23,7 @@ class SessionsController {
         }
         if(isset($_SESSION['user_id'])) {
           // SESSION[user_id]に値入っていればログインしたとみなす
-          header('Location: http://192.168.64.10/titles');
+          header('Location: http://192.168.64.9/titles');
           // exit();
         } else {
           if (!empty($_POST["email"]) && !empty($_POST["password"])) {
@@ -45,11 +45,11 @@ class SessionsController {
                       $_SESSION['user_id'] = $id;
                       $stmt->close();
                       $mysqli->close();
-                      header('Location: http://192.168.64.10/titles');
+                      header('Location: http://192.168.64.9/titles');
                   } else {
                       $stmt->close();
                       $mysqli->close();
-                      header('Location: http://192.168.64.10/sign_in');
+                      header('Location: http://192.168.64.9/sign_in');
                   }
               };
           }
@@ -73,7 +73,7 @@ class SessionsController {
             if(isset($_SESSION['user_id'])) {
                 $_SESSION = array();
                 session_destroy();
-            header('Location: http://192.168.64.10/sign_in');
+            header('Location: http://192.168.64.9/sign_in');
             } else {
                 echo "<a href='/sign_in'>ログインしていません</a>";
             }

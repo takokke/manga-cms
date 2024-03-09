@@ -6,7 +6,7 @@ class ChaptersController {
         $title_id = htmlspecialchars($_GET['title_id'], ENT_QUOTES, "UTF-8");
 
         // 接続
-        $mysqli = new mysqli('localhost', 'takumi', 'brightech', 'test');
+        $mysqli = new mysqli('localhost', 'hiroshima', 'brightech', 'test');
         if($mysqli->connect_error){
             echo $mysqli->connect_error;
             exit();
@@ -44,7 +44,7 @@ class ChaptersController {
         $start_date = htmlspecialchars($_POST['publication_start_date'], ENT_QUOTES, "UTF-8");
 
         // 接続
-        $mysqli = new mysqli('localhost', 'takumi', 'brightech', 'test');
+        $mysqli = new mysqli('localhost', 'hiroshima', 'brightech', 'test');
         if($mysqli->connect_error){
             echo $mysqli->connect_error;
             exit();
@@ -64,7 +64,7 @@ class ChaptersController {
             $stmt->execute();
             $stmt->close();
             $mysqli->close();
-            header("Location: http://192.168.64.10/titles/chapters?title_id=$title_id");
+            header("Location: http://192.168.64.9/titles/chapters?title_id=$title_id");
         }
     }
 
@@ -73,7 +73,7 @@ class ChaptersController {
         $id = htmlspecialchars($_GET["id"], ENT_QUOTES, "UTF-8");
         $title_id = htmlspecialchars($_GET["title_id"], ENT_QUOTES, "UTF-8");
 
-        $mysqli = new mysqli('localhost', 'takumi','brightech', 'test');
+        $mysqli = new mysqli('localhost', 'hiroshima','brightech', 'test');
         if ($mysqli->connect_error) {
             echo $mysqli->connect_error;
             exit();
@@ -124,7 +124,7 @@ class ChaptersController {
         $input_start_date = htmlspecialchars($_POST["publication_start_date"], ENT_QUOTES, "UTF-8");
 
         // 接続
-        $mysqli = new mysqli('localhost', 'takumi', 'brightech', 'test');
+        $mysqli = new mysqli('localhost', 'hiroshima', 'brightech', 'test');
         if($mysqli->connect_error){
             echo $mysqli->connect_error;
             exit();
@@ -154,7 +154,7 @@ class ChaptersController {
             $stmt->execute();
             $stmt->close();
             $mysqli->close();
-            header("Location: http://192.168.64.10/titles/chapters?title_id=$title_id");
+            header("Location: http://192.168.64.9/titles/chapters?title_id=$title_id");
         }
     }
 
@@ -162,7 +162,7 @@ class ChaptersController {
     private function authenticate_admin_user() {
         session_start();
         if(!isset($_SESSION['user_id'])) {
-            header('Location: http://192.168.64.10/sign_in');
+            header('Location: http://192.168.64.9/sign_in');
         }
     }
 
